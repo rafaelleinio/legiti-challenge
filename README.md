@@ -25,16 +25,16 @@ In the course of this readme more in-depth details will be provided about the ch
 
 ## Proposed Solution
 
-The problem was addressed by modeling the data as a graph structure. As it was about characters and the relationships between them, it was easy to model this structure using the characters as the vertices and the interactions the edges.
+The problem was addressed by modeling the data as a graph structure. As it was about characters and the relationships between them, it was easy to model this structure using the characters as the vertices and the interactions as edges.
 
-The technology used to be thee processing engine for the data is [Apache Spark](https://spark.apache.org/). Spark it is a fast and big-data-ready technology for data processing and has several extension for different data domains.
-Here in this repository I use the [Graphframes](https://github.com/graphframes/graphframes) Spark extension, which is a Graph processing engine mounted on top of the powerful Dataframe API from Spark.
+The technology used as the processing engine for the data is [Apache Spark](https://spark.apache.org/). Spark is a fast and big-data-ready technology for data processing and has several extensions for different data domains.
+Here in this repository I use the [Graphframes](https://github.com/graphframes/graphframes) Spark extension, which is a graph processing engine mounted on top of the powerful Dataframe API from Spark.
 
 Main benefits from this technology decision:
 - Apache Spark is the state-of-the-art big data technology used in modern data platforms nowadays.
-- The same `core` code here used to process some KBs of data in a single machine can be used for multi-TBs of data in a huge cluster of instances with little to no changes.
-- Spark can process batch and streams of data equivalently easy and both modes are used and available in the `core` module.
-    - This means we can maintain a in-memory **Graph representation updating in real-time** from streaming knowledge base dataset.
+- The same `core` code used here to process some KBs of data in a single machine, can be used for multi-TBs of data in a huge cluster of instances with little to no changes.
+- Spark can process batch and streams of data equivalently easily and both modes are used and available in the `core` module.
+    - This means we can maintain a in-memory **Graph representation updating in real-time** from a streaming knowledge base dataset.
 
 
 `Core` module simple representation:
@@ -57,7 +57,7 @@ docker build --tag meli-challenge .
 
 #### Get in container context
 ```bash
-docker --network host run -it meli-challenge
+docker run --network host -it meli-challenge
 ```
 
 ## CLI
@@ -164,7 +164,7 @@ Arthur-Dayne	Lewyn-Martell	Gerold-Hightower
 > Run command from container context:
 
 ```bash
-python meli_challenge/server.py
+python meli_challenge/api.py
 ```
 
 This command will start up the server listening the request on port 5000 (default Flask)
@@ -289,3 +289,5 @@ All tests:
 ```bash
 make tests
 ```
+
+
