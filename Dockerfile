@@ -1,9 +1,11 @@
 FROM rafaelleinio/docker-java-python
 
-# setup
-COPY . meli-challenge
-RUN cd meli-challenge && pip install .
+COPY ./requirements.txt /legiti-challenge/requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r /legiti-challenge/requirements.txt
 
-# workdir
-WORKDIR /meli-challenge
-CMD ["bash"]
+COPY . /legiti-challenge
+RUN pip install -r /legiti-challenge/.
+
+WORKDIR /legiti-challenge
+CMD python legiti_challenge/cli.py

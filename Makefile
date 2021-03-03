@@ -25,7 +25,7 @@ tests:
 	@echo "Tests"
 	@echo "=========="
 	@echo ""
-	@python -m pytest -W ignore::DeprecationWarning --cov-config=.coveragerc --cov-report term --cov-report html:unit-tests-cov --cov=meli_challenge/core --cov-fail-under=75 tests/
+	@python -m pytest -W ignore::DeprecationWarning --cov-config=.coveragerc --cov-report term --cov-report html:unit-tests-cov --cov=legiti_challenge --cov-fail-under=75 tests/
 
 .PHONY: unit-tests
 ## run unit tests with coverage report
@@ -34,7 +34,7 @@ unit-tests:
 	@echo "Unit Tests"
 	@echo "=========="
 	@echo ""
-	@python -m pytest -W ignore::DeprecationWarning --cov-config=.coveragerc --cov-report term --cov-report html:unit-tests-cov --cov=meli_challenge/core --cov-fail-under=75 tests/unit
+	@python -m pytest -W ignore::DeprecationWarning --cov-config=.coveragerc --cov-report term --cov-report html:unit-tests-cov --cov=legiti_challenge/core --cov-fail-under=75 tests/unit
 
 .PHONY: integration-tests
 ## run integration tests with coverage report
@@ -43,7 +43,7 @@ integration-tests:
 	@echo "Integration Tests"
 	@echo "================="
 	@echo ""
-	@python -m pytest -W ignore::DeprecationWarning --cov-config=.coveragerc --cov-report term --cov-report xml:integration-tests-cov.xml --cov=meli_challenge --cov-fail-under=60 tests/integration
+	@python -m pytest -W ignore::DeprecationWarning --cov-config=.coveragerc --cov-report term --cov-report xml:integration-tests-cov.xml --cov=legiti_challenge --cov-fail-under=60 tests/integration
 
 .PHONY: style-check
 ## run code style checks with black
@@ -72,14 +72,33 @@ checks: style-check quality-check
 ## fix stylistic errors with black
 apply-style:
 	@python -m black -t py36 --exclude="build/|buck-out/|dist/|_build/|pip/|\.pip/|\.git/|\.hg/|\.mypy_cache/|\.tox/|\.venv/" .
-	@python -m isort -rc meli_challenge/ tests/
+	@python -m isort -rc legiti_challenge/ tests/
+
+.PHONY: cassandra-up
+## make cassandra up and running
+cassandra-up:
+	@docker run -v $$(pwd)/migrations:/mnt -d --rm --name cassandra -p 127.0.0.1:9042:9042 -e CASSANDRA_CLUSTER_NAME=MyCluster cassandra:3.11
+	@sleep 30
+	@docker exec cassandra cqlsh -u cassandra -p cassandra -f /mnt/create_keyspace.sql
+	@docker exec cassandra cqlsh -u cassandra -p cassandra -f /mnt/create_user_chargebacks.sql
+	@docker exec cassandra cqlsh -u cassandra -p cassandra -f /mnt/create_user_orders.sql
+
+.PHONY: cqlsh
+## connect to cassandre interactive shell
+cqlsh:
+	@docker exec -it cassandra cqlsh
+
+.PHONY: cassandra-down
+## make cassandra down
+cassandra-down:
+	@docker stop $$(docker ps -a -q --filter ancestor=cassandra:3.11) || true
 
 .PHONY: clean
 ## clean unused artifacts
 clean:
 	@find ./ -type d -name 'dist' -exec rm -rf {} +;
 	@find ./ -type d -name 'build' -exec rm -rf {} +;
-	@find ./ -type d -name 'meli_challenge.egg-info' -exec rm -rf {} +;
+	@find ./ -type d -name 'legiti_challenge.egg-info' -exec rm -rf {} +;
 	@find ./ -type d -name 'htmlcov' -exec rm -rf {} +;
 	@find ./ -type d -name '.pytest_cache' -exec rm -rf {} +;
 	@find ./ -type d -name 'spark-warehouse' -exec rm -rf {} +;

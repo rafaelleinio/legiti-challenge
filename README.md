@@ -1,15 +1,16 @@
-# Meli Challenge
-_A nice Graph and Spark based solution for the Characters Interactions problem._
+# Legiti Challenge
+_A nice project solution for building and running pipelines for feature store._
 
 ![Python Version](https://img.shields.io/badge/python-3.7%20%7C%203.8-brightgreen.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![aa](https://img.shields.io/badge/code%20quality-flake8-blue)](https://github.com/PyCQA/flake8)
+[![pytest-coverage: 100%](https://img.shields.io/badge/pytest--coverage-100%25-green)](https://github.com/pytest-dev/pytest)
 
 Build Status:
 
 | Core     | Docker Image 
 | -------- | -------- 
-| ![Tests](https://github.com/rafaelleinio/meli-challenge/workflows/Tests/badge.svg?branch=main)     | ![Build Docker Image](https://github.com/rafaelleinio/meli-challenge/workflows/Build%20Docker%20Image/badge.svg?branch=main)    
+| ![Tests](https://github.com/rafaelleinio/legiti-challenge/workflows/Tests/badge.svg?branch=main)     | ![Build Docker Image](https://github.com/rafaelleinio/legiti-challenge/workflows/Build%20Docker%20Image/badge.svg?branch=main)    
 
 ## The Challenge and Proposed Arch for Solution
 The objective of the challenges is to analyze networks of interaction between the characters in the books of the saga A Song of Ice and Fire, written by George R. R. Martin.

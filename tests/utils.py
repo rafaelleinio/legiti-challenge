@@ -1,11 +1,12 @@
 from json import dumps
 from typing import List
 
-from meli_challenge.core import SparkClient
-from meli_challenge.core.input import Input
 from pyspark import SparkContext
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import col
+
+from legiti_challenge.core import SparkClient
+from legiti_challenge.core.input import Input
 
 _client = SparkClient()
 _client.create_session()

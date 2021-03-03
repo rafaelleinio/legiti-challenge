@@ -14,4 +14,4 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build Image
-      run: docker build --tag meli-challenge .
+      run: docker build --tag legiti-challenge .

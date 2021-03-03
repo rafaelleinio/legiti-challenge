@@ -67,3 +67,5 @@ unit-tests-cov/
 \.ipynb_checkpoints/
 
 *.xml
+
+.DS_Store

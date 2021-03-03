@@ -1,4 +1,5 @@
-pyspark==2.4.4
-numpy
-pandas
-flask
+cmake
+butterfree[h3]
+butterfree==1.2.0.dev2
+pyspark==3.0.0
+click==7.1.2
