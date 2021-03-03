@@ -15,7 +15,7 @@ requirements: requirements-dev requirements-minimum
 .PHONY: ci-install
 ci-install:
 	@pip install --upgrade pip
-	@pip install cmake
+	@pip install wheel
 	@python -m pip install -U -r requirements.txt -r requirements.dev.txt -t ./pip/deps --cache-dir ./pip/cache
 
 .PHONY: tests

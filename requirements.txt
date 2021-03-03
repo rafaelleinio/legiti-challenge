@@ -1,5 +1,5 @@
-cmake
-butterfree[h3]
-butterfree==1.2.0.dev2
 pyspark==3.0.0
 click==7.1.2
+cmake==3.16.3
+h3==3.4.2
+butterfree==1.2.0.dev2
