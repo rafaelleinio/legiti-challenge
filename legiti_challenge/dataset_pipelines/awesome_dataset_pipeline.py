@@ -114,7 +114,7 @@ where
                 name="awesome_dataset",
                 entity="user",
                 description="Dataset enriching orders events with aggregated features "
-                            "on total of orders and chargebacks by user.",
+                "on total of orders and chargebacks by user.",
                 keys=[
                     KeyFeature(
                         name="order_id",
@@ -137,37 +137,37 @@ where
                     Feature(
                         name="cpf_orders__count_over_3_days_rolling_windows",
                         description="Count of orders over 3 days rolling windows group "
-                                    "by user (identified by CPF)",
+                        "by user (identified by CPF)",
                         dtype=DataType.INTEGER,
                     ),
                     Feature(
                         name="cpf_orders__count_over_7_days_rolling_windows",
                         description="Count of orders over 7 days rolling windows group "
-                                    "by user (identified by CPF)",
+                        "by user (identified by CPF)",
                         dtype=DataType.INTEGER,
                     ),
                     Feature(
                         name="cpf_orders__count_over_30_days_rolling_windows",
                         description="Count of orders over 30 days rolling windows group"
-                                    " by user (identified by CPF)",
+                        " by user (identified by CPF)",
                         dtype=DataType.INTEGER,
                     ),
                     Feature(
                         name="cpf_chargebacks__count_over_3_days_rolling_windows",
                         description="Count of chargebacks over 3 days rolling windows "
-                                    "group by user (identified by CPF)",
+                        "group by user (identified by CPF)",
                         dtype=DataType.INTEGER,
                     ),
                     Feature(
                         name="cpf_chargebacks__count_over_7_days_rolling_windows",
                         description="Count of chargebacks over 7 days rolling windows "
-                                    "group by user (identified by CPF)",
+                        "group by user (identified by CPF)",
                         dtype=DataType.INTEGER,
                     ),
                     Feature(
                         name="cpf_chargebacks__count_over_30_days_rolling_windows",
                         description="Count of chargebacks over 30 days rolling windows "
-                                    "group by user (identified by CPF)",
+                        "group by user (identified by CPF)",
                         dtype=DataType.INTEGER,
                     ),
                 ],
