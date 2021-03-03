@@ -3,14 +3,13 @@ from pprint import pformat
 
 import click
 from butterfree.reports.metadata import Metadata
-from pyspark import SparkConf
-from pyspark.sql import SparkSession
-
 from legiti_challenge.dataset_pipelines import AwesomeDatasetPipeline
 from legiti_challenge.feature_store_pipelines.user import (
     UserChargebacksPipeline,
     UserOrdersPipeline,
 )
+from pyspark import SparkConf
+from pyspark.sql import SparkSession
 
 conf = SparkConf().setAll(
     [

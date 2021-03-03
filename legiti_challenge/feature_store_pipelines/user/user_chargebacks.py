@@ -9,13 +9,12 @@ from butterfree.transform.aggregated_feature_set import AggregatedFeatureSet
 from butterfree.transform.features import Feature, KeyFeature, TimestampFeature
 from butterfree.transform.transformations import AggregatedTransform
 from butterfree.transform.utils.function import Function
-from pyspark.sql import functions
-
 from legiti_challenge.butterfree_customs import (
     LocalHistoricalFSWriter,
     NotCheckSchemaHook,
     ZeroFillHook,
 )
+from pyspark.sql import functions
 
 
 class UserChargebacksPipeline(FeatureSetPipeline):

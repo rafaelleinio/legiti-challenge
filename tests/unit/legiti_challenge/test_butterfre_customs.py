@@ -3,7 +3,6 @@ from unittest.mock import Mock
 from butterfree.clients import SparkClient
 from butterfree.testing.dataframe import assert_dataframe_equality
 from butterfree.transform import FeatureSet
-
 from legiti_challenge.butterfree_customs import (
     DatasetWriter,
     LocalHistoricalFSConfig,

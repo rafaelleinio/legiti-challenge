@@ -2,7 +2,6 @@ import shutil
 
 import pytest
 from click.testing import CliRunner
-
 from legiti_challenge.cli import cli
 
 
