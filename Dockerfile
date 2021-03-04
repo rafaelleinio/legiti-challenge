@@ -8,4 +8,4 @@ COPY . /legiti-challenge
 RUN pip install /legiti-challenge/.
 
 WORKDIR /legiti-challenge
-CMD python legiti_challenge/cli.py
+ENTRYPOINT ["python", "./legiti_challenge/cli.py"]
