@@ -1,25 +1,26 @@
 .PHONY: requirements-dev
-## install development requirements
+## install dev requirements
 requirements-dev:
 	@PYTHONPATH=. python -m pip install -U -r requirements.dev.txt
 
 .PHONY: requirements-minimum
-## install prod requirements
+## install user requirements
 requirements-minimum:
 	@PYTHONPATH=. python -m pip install -U -r requirements.txt
 
 .PHONY: requirements
-## install requirements
+## install all requirements
 requirements: requirements-dev requirements-minimum
 
 .PHONY: ci-install
+## command to install on CI pipeline
 ci-install:
 	@pip install --upgrade pip
 	@pip install wheel
 	@python -m pip install -U -r requirements.txt -r requirements.dev.txt -t ./pip/deps --cache-dir ./pip/cache
 
 .PHONY: tests
-## run unit tests with coverage report
+## run unit and integration tests with coverage report
 tests:
 	@echo ""
 	@echo "Tests"
@@ -69,13 +70,13 @@ quality-check:
 checks: style-check quality-check
 
 .PHONY: apply-style
-## fix stylistic errors with black
+## fix stylistic errors with black and isort
 apply-style:
 	@python -m black -t py36 --exclude="build/|buck-out/|dist/|_build/|pip/|\.pip/|\.git/|\.hg/|\.mypy_cache/|\.tox/|\.venv/" .
 	@python -m isort -rc legiti_challenge/ tests/
 
 .PHONY: cassandra-up
-## make cassandra up and running
+## make cassandra up and running on container
 cassandra-up:
 	@docker run -v $$(pwd)/migrations:/mnt -d --rm --name cassandra -p 127.0.0.1:9042:9042 -e CASSANDRA_CLUSTER_NAME=MyCluster cassandra:3.11
 	@sleep 30
@@ -84,14 +85,22 @@ cassandra-up:
 	@docker exec cassandra cqlsh -u cassandra -p cassandra -f /mnt/create_user_orders.sql
 
 .PHONY: cqlsh
-## connect to cassandre interactive shell
+## connect to cassandre container interactive shell
 cqlsh:
 	@docker exec -it cassandra cqlsh
 
 .PHONY: cassandra-down
-## make cassandra down
+## make cassandra container down
 cassandra-down:
 	@docker stop $$(docker ps -a -q --filter ancestor=cassandra:3.11) || true
+
+.PHONY: awesome-dataset
+## create both user feature sets and awesome dataset
+awesome-dataset:
+	@docker build --tag legiti-challenge .
+	@docker run -v $$(pwd)/data:/legiti-challenge/data -it legiti-challenge execute feature_store.user_orders --end-date 2020-07-17
+	@docker run -v $$(pwd)/data:/legiti-challenge/data -it legiti-challenge execute feature_store.user_chargebacks --end-date 2020-07-17
+	@docker run -v $$(pwd)/data:/legiti-challenge/data -it legiti-challenge execute dataset.awesome_dataset
 
 .PHONY: clean
 ## clean unused artifacts
