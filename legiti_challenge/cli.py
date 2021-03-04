@@ -18,8 +18,6 @@ conf = SparkConf().setAll(
     ]
 )
 conf.set("spark.logConf", "true")
-spark = SparkSession.builder.config(conf=conf).appName("legiti-challenge").getOrCreate()
-spark.sparkContext.setLogLevel("ERROR")
 
 pipelines = {
     "feature_store.user_orders": UserOrdersPipeline(),
@@ -28,7 +26,13 @@ pipelines = {
 }
 
 
-@click.group(context_settings=dict(max_content_width=120))
+def create_spark_session():
+    return (
+        SparkSession.builder.config(conf=conf).appName("legiti-challenge").getOrCreate()
+    )
+
+
+@click.group(context_settings=dict(max_content_width=250))
 def cli():
     """All you need for running you feature store pipelines!"""
 
@@ -49,9 +53,23 @@ def cli():
 )
 def execute(pipeline_name: str, start_date: str, end_date: str):
     """Executes a defined pipeline."""
-    click.echo(f"{pipeline_name} pipeline execution initiated...")
+    click.echo(f">>> {pipeline_name} pipeline execution initiated...")
+    spark = create_spark_session()
     pipelines[pipeline_name].run(start_date=start_date, end_date=end_date)
-    click.echo("Pipeline execution finished!!!")
+    click.echo(">>> Pipeline execution finished!!!")
+
+    pipeline_type, pipeline_title = pipeline_name.split(".")
+    if pipeline_type == "feature_store":
+        click.echo(">>> Virtual Online Feature Store result:")
+        spark.table(f"online_feature_store__{pipeline_title}").orderBy(
+            "timestamp"
+        ).show()
+        click.echo(
+            f">>> Local Historical Feature Store results at data/feature_store/historical"
+            f"/user/{pipeline_title}"
+        )
+        return
+    click.echo(f">>> Dataset results at data/datasets/{pipeline_title}")
 
 
 @cli.command()
