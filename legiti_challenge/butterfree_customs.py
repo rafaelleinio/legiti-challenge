@@ -47,6 +47,8 @@ class LocalHistoricalFSConfig(MetastoreConfig):
 class LocalHistoricalFSWriter(HistoricalFeatureStoreWriter):
     """Simplification for the HistoricalFeatureStoreWriter for writing to local path."""
 
+    __name__ = "Local Historical Feature Store Writer"
+
     def __init__(self, debug_mode: bool = False):
         super().__init__(
             db_config=LocalHistoricalFSConfig(),
@@ -69,6 +71,8 @@ class LocalHistoricalFSWriter(HistoricalFeatureStoreWriter):
 
 class DatasetWriter(Writer):
     """Simplification of feature store Writers for writing datasets."""
+
+    __name__ = "Dataset Writer"
 
     def __init__(self):
         super().__init__()

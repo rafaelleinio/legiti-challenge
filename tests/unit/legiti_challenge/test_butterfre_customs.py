@@ -75,6 +75,7 @@ def test_local_historical_fs_writer():
 
     # assert
     assert output_properties == expected_properties
+    assert local_fs_writer.__name__ == "Local Historical Feature Store Writer"
 
 
 def test_dataset_writer(spark_session):
@@ -103,3 +104,4 @@ def test_dataset_writer(spark_session):
     assert args["mode"] == "overwrite"
     assert args["path"] == "data/datasets/feature_set"
     assert args["header"] is True
+    assert dataset_writer.__name__ == "Dataset Writer"
