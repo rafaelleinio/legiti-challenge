@@ -27,6 +27,7 @@ pipelines = {
 
 
 def create_spark_session():
+    """Creates the Spark session."""
     return (
         SparkSession.builder.config(conf=conf).appName("legiti-challenge").getOrCreate()
     )
@@ -65,8 +66,8 @@ def execute(pipeline_name: str, start_date: str, end_date: str):
             "timestamp"
         ).show()
         click.echo(
-            f">>> Local Historical Feature Store results at data/feature_store/historical"
-            f"/user/{pipeline_title}"
+            ">>> Local Historical Feature Store results at data/feature_store/"
+            f"historical/user/{pipeline_title}"
         )
         return
     click.echo(f">>> Dataset results at data/datasets/{pipeline_title}")
